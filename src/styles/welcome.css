@@ -1,0 +1,284 @@
+/* ============================================
+   Welcome / Hero Landing Screen
+   ============================================ */
+
+/* Full-screen welcome overlay */
+.welcome-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.8s;
+  overflow: hidden;
+}
+
+.welcome-screen.welcome-screen--exiting {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Floating particles in the background */
+.welcome-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(2px 2px at 80% 20%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(2px 2px at 50% 70%, rgba(255,255,255,0.2), transparent),
+    radial-gradient(2px 2px at 30% 80%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(2px 2px at 70% 50%, rgba(255,255,255,0.25), transparent),
+    radial-gradient(3px 3px at 15% 55%, rgba(236, 72, 153, 0.3), transparent),
+    radial-gradient(3px 3px at 85% 65%, rgba(245, 158, 11, 0.3), transparent),
+    radial-gradient(3px 3px at 40% 15%, rgba(91, 33, 182, 0.3), transparent),
+    radial-gradient(3px 3px at 60% 85%, rgba(45, 212, 191, 0.3), transparent);
+  animation: welcomeParticlesFloat 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes welcomeParticlesFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10px) scale(1.02); }
+}
+
+/* Center content wrapper */
+.welcome-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 20px;
+  text-align: center;
+  animation: welcomeFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes welcomeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Decorative emoji row */
+.welcome-emojis {
+  font-size: 2.5rem;
+  letter-spacing: 8px;
+  margin-bottom: 12px;
+  animation: welcomeEmojiBounce 2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+}
+
+@keyframes welcomeEmojiBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Main title — "Happy Birthday" */
+.welcome-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  color: #D62828;
+  -webkit-text-stroke: 2.5px #156675;
+  text-shadow:
+    -2px -2px 0 #156675,
+    2px -2px 0 #156675,
+    -2px 2px 0 #156675,
+    2px 2px 0 #156675,
+    0 6px 0 #0C434D,
+    0 10px 20px rgba(0, 0, 0, 0.25);
+  line-height: 1.15;
+  margin-bottom: 8px;
+  animation: welcomeTitlePulse 3s ease-in-out infinite;
+  letter-spacing: 1px;
+}
+
+@keyframes welcomeTitlePulse {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.02); filter: brightness(1.05); }
+}
+
+/* Name — "Diva" */
+.welcome-name {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 10vw, 7.5rem);
+  background: linear-gradient(135deg, #EC4899 0%, #D62828 30%, #F59E0B 60%, #EC4899 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: welcomeNameShimmer 4s ease-in-out infinite;
+  filter: drop-shadow(0 4px 15px rgba(236, 72, 153, 0.4));
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+@keyframes welcomeNameShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Subtitle / tagline */
+.welcome-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 2vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  animation: welcomeSubtitleFade 1.5s ease-out 0.6s both;
+}
+
+@keyframes welcomeSubtitleFade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Show Cake button */
+.welcome-show-cake-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 48px;
+  border: none;
+  border-radius: 100px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(135deg, #5B21B6 0%, #7C3AED 50%, #EC4899 100%);
+  background-size: 200% 200%;
+  box-shadow:
+    0 8px 30px rgba(91, 33, 182, 0.45),
+    0 0 50px rgba(124, 58, 237, 0.15),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+  text-transform: uppercase;
+  position: relative;
+  overflow: visible;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: welcomeBtnAppear 1s ease-out 1s both,
+             welcomeBtnGlow 3s ease-in-out 2s infinite;
+}
+
+@keyframes welcomeBtnAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes welcomeBtnGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+    box-shadow:
+      0 8px 30px rgba(91, 33, 182, 0.45),
+      0 0 50px rgba(124, 58, 237, 0.15);
+  }
+  50% {
+    background-position: 100% 50%;
+    box-shadow:
+      0 8px 40px rgba(236, 72, 153, 0.5),
+      0 0 60px rgba(236, 72, 153, 0.2);
+  }
+}
+
+.welcome-show-cake-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow:
+    0 12px 40px rgba(91, 33, 182, 0.55),
+    0 0 70px rgba(124, 58, 237, 0.25);
+}
+
+.welcome-show-cake-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Cake emoji in button */
+.welcome-show-cake-btn .welcome-btn-cake {
+  font-size: 1.4rem;
+  animation: welcomeBtnCakeWiggle 2s ease-in-out infinite;
+}
+
+@keyframes welcomeBtnCakeWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+/* Sparkle ring around button */
+.welcome-show-cake-btn::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, #EC4899, #7C3AED, #2DD4BF, #F59E0B, #EC4899);
+  background-size: 300% 300%;
+  z-index: -1;
+  opacity: 0;
+  animation: welcomeRingSpin 3s linear infinite,
+             welcomeRingPulse 3s ease-in-out 2s infinite;
+}
+
+@keyframes welcomeRingSpin {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 300% 300%; }
+}
+
+@keyframes welcomeRingPulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.6; }
+}
+
+/* Decorative corner sparkles */
+.welcome-sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-gold);
+  border-radius: 50%;
+  animation: sparkle 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.welcome-sparkle:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+.welcome-sparkle:nth-child(2) { top: 25%; right: 15%; animation-delay: 0.5s; }
+.welcome-sparkle:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 1s; }
+.welcome-sparkle:nth-child(4) { bottom: 20%; right: 10%; animation-delay: 1.5s; }
+.welcome-sparkle:nth-child(5) { top: 40%; left: 5%; animation-delay: 2s; width: 4px; height: 4px; }
+.welcome-sparkle:nth-child(6) { top: 60%; right: 8%; animation-delay: 0.3s; width: 5px; height: 5px; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .welcome-emojis {
+    font-size: 1.8rem;
+    letter-spacing: 5px;
+  }
+
+  .welcome-subtitle {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+  }
+
+  .welcome-show-cake-btn {
+    padding: 14px 36px;
+    font-size: 0.95rem;
+  }
+}

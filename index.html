@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0">
+  <meta name="title" content="🎂 Birthday Celebration — Virtual Birthday Cake">
+  <meta name="description" content="Create a virtual birthday cake, add candles and heartfelt messages. Share with friends and family to celebrate together!">
+  <meta name="theme-color" content="#D34A6D">
+  <title>🎂 Birthday Celebration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Montserrat+Alternates:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/styles/variables.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/animations.css">
+  <link rel="stylesheet" href="/src/styles/components.css">
+  <link rel="stylesheet" href="/src/styles/loading.css">
+  <link rel="stylesheet" href="/src/styles/banner.css">
+  <link rel="stylesheet" href="/src/styles/modals.css">
+  <link rel="stylesheet" href="/src/styles/wizard.css">
+  <link rel="stylesheet" href="/src/styles/wishfeed.css">
+  <link rel="stylesheet" href="/src/styles/settings.css">
+  <link rel="stylesheet" href="/src/styles/cakecut.css">
+  <link rel="stylesheet" href="/src/styles/spiderman.css">
+  <link rel="stylesheet" href="/src/styles/welcome.css">
+  <link rel="stylesheet" href="/src/styles/celebration.css">
+</head>
+<body>
+  <h1 class="seo__title">Birthday Celebration — Virtual Birthday Cake</h1>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-screen__content">
+      <svg class="loading-screen__cake-icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Candles -->
+        <line x1="40" y1="25" x2="40" y2="45" stroke="#3B1E6E" stroke-width="2"/>
+        <line x1="60" y1="20" x2="60" y2="45" stroke="#3B1E6E" stroke-width="2"/>
+        <line x1="80" y1="25" x2="80" y2="45" stroke="#3B1E6E" stroke-width="2"/>
+        <!-- Flames -->
+        <ellipse cx="40" cy="22" rx="3" ry="5" fill="#3B1E6E" opacity="0.6"/>
+        <ellipse cx="60" cy="17" rx="3" ry="5" fill="#3B1E6E" opacity="0.6"/>
+        <ellipse cx="80" cy="22" rx="3" ry="5" fill="#3B1E6E" opacity="0.6"/>
+        <!-- Top tier -->
+        <ellipse cx="60" cy="45" rx="25" ry="8" stroke="#3B1E6E" stroke-width="2" fill="none"/>
+        <line x1="35" y1="45" x2="35" y2="58" stroke="#3B1E6E" stroke-width="2"/>
+        <line x1="85" y1="45" x2="85" y2="58" stroke="#3B1E6E" stroke-width="2"/>
+        <ellipse cx="60" cy="58" rx="25" ry="8" stroke="#3B1E6E" stroke-width="2" fill="none"/>
+        <!-- Bottom tier -->
+        <ellipse cx="60" cy="65" rx="38" ry="10" stroke="#3B1E6E" stroke-width="2" fill="none"/>
+        <line x1="22" y1="65" x2="22" y2="82" stroke="#3B1E6E" stroke-width="2"/>
+        <line x1="98" y1="65" x2="98" y2="82" stroke="#3B1E6E" stroke-width="2"/>
+        <ellipse cx="60" cy="82" rx="38" ry="10" stroke="#3B1E6E" stroke-width="2" fill="none"/>
+        <!-- Plate -->
+        <ellipse cx="60" cy="88" rx="50" ry="12" stroke="#3B1E6E" stroke-width="2" fill="none"/>
+      </svg>
+      <div class="loading-screen__progress">
+        <div class="loading-screen__progress-bar"></div>
+      </div>
+    </div>
+    <div class="loading-screen__marquee">
+      <div class="loading-screen__marquee-track">
+        <span>Decorating the cake with edible delights.</span>
+        <span>Adding sprinkles of joy.</span>
+        <span>Lighting the candles with love.</span>
+        <span>Mixing in extra sweetness.</span>
+        <span>Decorating the cake with edible delights.</span>
+        <span>Adding sprinkles of joy.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Welcome / Hero Landing Screen -->
+  <div id="welcome-screen" class="welcome-screen hidden">
+    <!-- Decorative sparkles -->
+    <div class="welcome-sparkle"></div>
+    <div class="welcome-sparkle"></div>
+    <div class="welcome-sparkle"></div>
+    <div class="welcome-sparkle"></div>
+    <div class="welcome-sparkle"></div>
+    <div class="welcome-sparkle"></div>
+
+    <div class="welcome-content">
+      <div class="welcome-emojis">🎂 🎈 🎉</div>
+      <h2 class="welcome-title">Happy Birthday</h2>
+      <h2 class="welcome-name" id="welcome-name">Diva</h2>
+      <p class="welcome-subtitle">✨ A special celebration awaits ✨</p>
+      <button class="welcome-show-cake-btn" id="show-cake-btn">
+        <span class="welcome-btn-cake">🎂</span>
+        <span>Show Cake</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 3D Canvas Container -->
+  <div id="canvas-container" class="canvas-container hidden">
+    <canvas id="main-canvas" class="main-canvas"></canvas>
+  </div>
+
+  <!-- Birthday Banner (floating text above cake) -->
+  <div id="birthday-banner" class="birthday-banner hidden">
+    <h2 class="birthday-banner__text">Happy Birthday</h2>
+  </div>
+
+  <!-- Invitation Modal -->
+  <div id="invitation-modal" class="modal-overlay hidden">
+    <div class="modal invitation-modal">
+      <button class="modal__close" id="invitation-close">✕</button>
+      <h2 class="modal__title">You were invited!</h2>
+      <p class="modal__text">Your friend invited you to add your candle and message to the cake. Click the link below to join the celebration!</p>
+      <button class="btn btn--primary btn--sparkle" id="add-candle-btn">
+        <span class="btn__text">ADD CANDLE</span>
+        <div class="btn__sparkles">
+          <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+          <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+          <span class="btn__sparkle"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Candle Wizard Sidebar -->
+  <div id="wizard-sidebar" class="wizard-sidebar hidden">
+    <!-- Step 1: Select Candle -->
+    <div id="wizard-step1" class="wizard-step">
+      <h2 class="wizard__title">Add your candle</h2>
+      <div class="wizard__progress">
+        <span class="wizard__step-num wizard__step-num--active">1</span>
+        <div class="wizard__progress-line"></div>
+        <span class="wizard__step-num">2</span>
+        <div class="wizard__progress-line"></div>
+        <span class="wizard__step-num">3</span>
+      </div>
+      <p class="wizard__prompt">Choose the candle you like the most</p>
+      <div class="wizard__candle-grid" id="candle-grid">
+        <!-- Candle options populated by JS -->
+      </div>
+      <div class="wizard__buttons">
+        <button class="btn btn--secondary" id="step1-back">BACK</button>
+        <button class="btn btn--primary btn--sparkle" id="step1-next">
+          <span class="btn__text">NEXT</span>
+          <div class="btn__sparkles">
+            <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+            <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+            <span class="btn__sparkle"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: Place Candle -->
+    <div id="wizard-step2" class="wizard-step hidden">
+      <h2 class="wizard__title">Place your candle</h2>
+      <div class="wizard__progress">
+        <span class="wizard__step-num wizard__step-num--done">1</span>
+        <div class="wizard__progress-line wizard__progress-line--done"></div>
+        <span class="wizard__step-num wizard__step-num--active">2</span>
+        <div class="wizard__progress-line"></div>
+        <span class="wizard__step-num">3</span>
+      </div>
+      <p class="wizard__prompt">Click on the cake to place your candle</p>
+      <div class="wizard__placement-hint">
+        <div class="wizard__arrow wizard__arrow--left" id="rotate-left">◀</div>
+        <span>Rotate the cake</span>
+        <div class="wizard__arrow wizard__arrow--right" id="rotate-right">▶</div>
+      </div>
+      <div class="wizard__buttons">
+        <button class="btn btn--secondary" id="step2-back">BACK</button>
+        <button class="btn btn--primary btn--sparkle" id="step2-next">
+          <span class="btn__text">NEXT</span>
+          <div class="btn__sparkles">
+            <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+            <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+            <span class="btn__sparkle"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 3: Write Message -->
+    <div id="wizard-step3" class="wizard-step hidden">
+      <h2 class="wizard__title">Leave a Message!</h2>
+      <div class="wizard__progress">
+        <span class="wizard__step-num wizard__step-num--done">1</span>
+        <div class="wizard__progress-line wizard__progress-line--done"></div>
+        <span class="wizard__step-num wizard__step-num--done">2</span>
+        <div class="wizard__progress-line wizard__progress-line--done"></div>
+        <span class="wizard__step-num wizard__step-num--active">3</span>
+      </div>
+      <p class="wizard__prompt">Add your name so the birthday person can see it. The more friends you invite, the more candles will be added. Share it!</p>
+    </div>
+  </div>
+
+  <!-- Message Card (Step 3 center card) -->
+  <div id="message-card" class="message-card hidden">
+    <div class="message-card__tabs">
+      <button class="message-card__tab message-card__tab--active" id="tab-write">Write it</button>
+      <button class="message-card__tab message-card__tab--ai" id="tab-ai">
+        <span>AI Writer</span>
+        <div class="btn__sparkles btn__sparkles--small">
+          <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+          <span class="btn__sparkle"></span>
+        </div>
+      </button>
+    </div>
+    <div class="message-card__body">
+      <!-- Manual Write Tab -->
+      <div id="write-panel" class="message-card__panel">
+        <label class="message-card__label">Write a wish...</label>
+        <textarea id="wish-textarea" class="message-card__textarea" maxlength="200" placeholder="Wishing for a birthday filled with love and joy, surrounded by family."></textarea>
+        <div class="message-card__counter"><span id="char-count">0</span> / 200</div>
+        <label class="message-card__label">Your name</label>
+        <input type="text" id="wish-name" class="message-card__input" placeholder="Your name" maxlength="30">
+      </div>
+      <!-- AI Writer Tab -->
+      <div id="ai-panel" class="message-card__panel hidden">
+        <label class="message-card__label">Add keywords for your wish</label>
+        <div class="message-card__chips-input">
+          <input type="text" id="chip-input" class="message-card__chip-field" placeholder="Love" maxlength="15">
+          <button class="btn btn--primary btn--sm" id="add-chip-btn">Add</button>
+        </div>
+        <div class="message-card__chips" id="chips-container"></div>
+        <textarea id="ai-textarea" class="message-card__textarea" maxlength="200" placeholder="Your AI-generated wish will appear here..." readonly></textarea>
+        <div class="message-card__counter"><span id="ai-char-count">0</span> / 200</div>
+        <label class="message-card__label">Your name</label>
+        <input type="text" id="ai-wish-name" class="message-card__input" placeholder="Your name" maxlength="30">
+      </div>
+    </div>
+    <div class="message-card__buttons">
+      <button class="btn btn--secondary" id="step3-back">BACK</button>
+      <button class="btn btn--primary btn--sparkle" id="ai-generate-btn" style="display:none;">
+        <span class="btn__text">✨ Generate</span>
+        <div class="btn__sparkles">
+          <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+          <span class="btn__sparkle"></span>
+        </div>
+      </button>
+      <button class="btn btn--primary btn--sparkle" id="step3-next">
+        <span class="btn__text">NEXT</span>
+        <div class="btn__sparkles">
+          <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+          <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+          <span class="btn__sparkle"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Wish Feed Sidebar (Dashboard) -->
+  <div id="wish-feed" class="wish-feed hidden">
+    <div class="wish-feed__header">
+      <h2 class="wish-feed__title">You're all set!</h2>
+      <p class="wish-feed__subtitle">Thank you for adding your candle and message! Share the experience with your friends and family.</p>
+    </div>
+    <button class="btn btn--secondary btn--full" id="feed-add-candle">
+      <span class="btn__text">🕯️ Add your candle</span>
+    </button>
+    <div class="wish-feed__list" id="wish-list">
+      <!-- Wishes populated by JS -->
+    </div>
+    <div class="wish-feed__footer">
+      <button class="btn btn--primary btn--sparkle btn--full" id="share-btn">
+        <span class="btn__text">Invite & Share</span>
+        <div class="btn__sparkles">
+          <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+          <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+          <span class="btn__sparkle"></span>
+        </div>
+      </button>
+      <button class="btn btn--primary btn--full" id="blow-candles-btn">🌬️ Blow Candles</button>
+      <a class="wish-feed__create-new" href="#">Create New Cake</a>
+    </div>
+  </div>
+
+  <!-- Thank You / Share Modal -->
+  <div id="thankyou-modal" class="modal-overlay hidden">
+    <div class="modal thankyou-modal">
+      <button class="modal__close" id="thankyou-close">✕</button>
+      <h2 class="modal__title">Thank you!</h2>
+      <p class="modal__text">Thank you for your warm message!</p>
+      <p class="modal__text">Invite friends and family to add their candles and messages to the cake too.</p>
+      <p class="modal__label">Share via QR code</p>
+      <div class="modal__qr" id="qr-container"></div>
+      <p class="modal__divider">OR</p>
+      <button class="btn btn--primary btn--sparkle" id="copy-link-btn">
+        <span class="btn__text">COPY LINK</span>
+        <div class="btn__sparkles">
+          <span class="btn__sparkle"></span><span class="btn__sparkle"></span>
+          <span class="btn__sparkle"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Settings / Header Bar -->
+  <div id="header-bar" class="header-bar hidden">
+    <button class="header-bar__btn" id="music-toggle" aria-label="Toggle music">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/>
+        <circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
+    <button class="header-bar__btn" id="settings-toggle" aria-label="Settings">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <line x1="4" y1="6" x2="20" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="4" y1="18" x2="20" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="settings-dropdown hidden" id="settings-dropdown">
+      <button class="settings-dropdown__item" id="toggle-ui">🖼️ Hide UI</button>
+      <button class="settings-dropdown__item">🎨 Quality: Medium</button>
+      <button class="settings-dropdown__item">💬 Language: English</button>
+      <hr class="settings-dropdown__divider">
+      <button class="settings-dropdown__item">📋 T&Cs</button>
+      <button class="settings-dropdown__item">🔒 Privacy</button>
+      <button class="settings-dropdown__item">ℹ️ About</button>
+      <button class="settings-dropdown__item">💌 Feedback</button>
+    </div>
+  </div>
+
+  <!-- Cake Cutting Overlay -->
+  <div id="cake-cut-overlay" class="cake-cut-overlay hidden">
+    <p class="cake-cut__instruction" id="cake-cut-instruction">Tap to make the first cut!</p>
+    <button class="cake-cut__btn" id="cake-cut-btn">
+      <span class="cake-cut__btn-knife">🔪</span>
+      <span>Cut the Cake!</span>
+    </button>
+    <div class="cake-cut__progress">
+      <div class="cake-cut__dot" id="cut-dot-1"></div>
+      <div class="cake-cut__dot" id="cut-dot-2"></div>
+    </div>
+  </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+  <!-- Left Spider-Man Swinging Animation (Upright Chibi Character) -->
+  <div class="spiderman-scene spiderman-scene--left" id="spiderman-scene-left">
+    <div class="spiderman-web-anchor spiderman-web-anchor--left">
+      <!-- Web corner net pattern at ceiling anchor (mirrored for left corner) -->
+      <div class="spiderman-web-pattern spiderman-web-pattern--left">
+        <div class="web-line"></div>
+        <div class="web-line"></div>
+        <div class="web-line"></div>
+        <div class="web-line"></div>
+        <div class="web-line"></div>
+        <div class="web-line"></div>
+        <div class="web-arc"></div>
+        <div class="web-arc"></div>
+        <div class="web-arc"></div>
+      </div>
+
+      <!-- Pendulum Arm (swings from top left anchor) -->
+      <div class="spiderman-pendulum spiderman-pendulum--left">
+        <!-- Glowing web line connecting anchor to Spider-Man -->
+        <div class="spiderman-web-thread spiderman-web-thread--left"></div>
+
+        <!-- Spider-Man Figure (hanging upright by one hand) -->
+        <div class="spiderman-figure spiderman-figure--left" id="spiderman-figure-left" title="Click me too! 🕷️">
+          <!-- Backlight rim glow -->
+          <div class="spiderman-glow spiderman-glow--left"></div>
+
+          <!-- Character & Eye Shutter Wrapper -->
+          <div class="spiderman-character spiderman-character--left">
+            <!-- 3D Chibi Spider-Man Left -->
+            <img 
+              src="/spiderman-chibi-left.png" 
+              alt="Spider-Man Left" 
+              class="spiderman-img spiderman-img--left" 
+              id="spiderman-img-left"
+              draggable="false"
+            />
+
+            <!-- High-precision SVG Mechanical Eye Shutter Overlay for Left Spider-Man -->
+            <svg class="spidey-eye-overlay spidey-eye-overlay--left" viewBox="0 0 576 1024" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="shutterGradLeft" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#111113" />
+                  <stop offset="45%" stop-color="#242429" />
+                  <stop offset="55%" stop-color="#242429" />
+                  <stop offset="100%" stop-color="#111113" />
+                </linearGradient>
+                <linearGradient id="slitGlowLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#88b4ff" stop-opacity="0.8" />
+                  <stop offset="50%" stop-color="#ffffff" stop-opacity="1" />
+                  <stop offset="100%" stop-color="#88b4ff" stop-opacity="0.8" />
+                </linearGradient>
+
+                <!-- Left eye lens boundary for left spidey -->
+                <clipPath id="leftEyeClipLeft">
+                  <path d="M 194,417 L 210,423 L 228,435 L 245,452 L 258,475 L 267,498 L 262,508 L 248,513 L 228,506 L 210,490 L 195,470 L 188,448 L 189,430 Z" />
+                </clipPath>
+
+                <!-- Right eye lens boundary for left spidey -->
+                <clipPath id="rightEyeClipLeft">
+                  <path d="M 388,417 L 374,423 L 358,435 L 342,452 L 328,475 L 320,498 L 324,508 L 338,513 L 358,506 L 376,490 L 391,470 L 398,448 L 397,430 Z" />
+                </clipPath>
+              </defs>
+
+              <!-- Left Eye Aperture -->
+              <g clip-path="url(#leftEyeClipLeft)">
+                <rect class="spidey-shutter spidey-shutter--top-left spidey-shutter--left-char" x="175" y="400" width="105" height="70" fill="url(#shutterGradLeft)" />
+                <rect class="spidey-shutter spidey-shutter--bottom-left spidey-shutter--left-char" x="175" y="465" width="105" height="70" fill="url(#shutterGradLeft)" />
+                <line class="spidey-slit spidey-slit--left spidey-slit--left-char" x1="188" y1="465" x2="267" y2="465" stroke="url(#slitGlowLeft)" stroke-width="2" />
+              </g>
+
+              <!-- Right Eye Aperture -->
+              <g clip-path="url(#rightEyeClipLeft)">
+                <rect class="spidey-shutter spidey-shutter--top-right spidey-shutter--left-char" x="315" y="400" width="105" height="70" fill="url(#shutterGradLeft)" />
+                <rect class="spidey-shutter spidey-shutter--bottom-right spidey-shutter--left-char" x="315" y="465" width="105" height="70" fill="url(#shutterGradLeft)" />
+                <line class="spidey-slit spidey-slit--right spidey-slit--left-char" x1="320" y1="465" x2="398" y2="465" stroke="url(#slitGlowLeft)" stroke-width="2" />
+              </g>
+            </svg>
+          </div>
+
+          <!-- Interactive Speech Bubble for Left Spider-Man -->
+          <div class="spidey-speech-bubble spidey-speech-bubble--left" id="spidey-speech-bubble-left">
+            Double the Spidey, double the fun! 🕸️🎉
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spider-Man Swinging Animation (Blended 3D Character - Right) -->
+  <div class="spiderman-scene" id="spiderman-scene">
+    <div class="spiderman-web-anchor">
+      <!-- Web corner net pattern at ceiling anchor -->
+      <div class="spiderman-web-pattern">
+        <div class="web-line"></div>
+        <div class="web-line"></div>
+        <div class="web-line"></div>
+        <div class="web-line"></div>
+        <div class="web-line"></div>
+        <div class="web-line"></div>
+        <div class="web-arc"></div>
+        <div class="web-arc"></div>
+        <div class="web-arc"></div>
+      </div>
+
+      <!-- Pendulum Arm (swings from top anchor point) -->
+      <div class="spiderman-pendulum">
+        <!-- Glowing web line connecting anchor to Spider-Man -->
+        <div class="spiderman-web-thread"></div>
+
+        <!-- Spider-Man Figure (hanging upside down by the web) -->
+        <div class="spiderman-figure" id="spiderman-figure" title="Click me! 🕷️">
+          <!-- Backlight rim glow -->
+          <div class="spiderman-glow"></div>
+
+          <!-- Character & Eye Shutter Wrapper -->
+          <div class="spiderman-character">
+            <!-- 3D Chibi Spider-Man (User's blended character image) -->
+            <img 
+              src="/spiderman-chibi.png" 
+              alt="Spider-Man" 
+              class="spiderman-img" 
+              id="spiderman-img"
+              draggable="false"
+            />
+
+            <!-- High-precision SVG Mechanical Eye Shutter Overlay -->
+            <svg class="spidey-eye-overlay" viewBox="0 0 576 1024" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <!-- Shutter carbon texture gradient -->
+                <linearGradient id="shutterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#111113" />
+                  <stop offset="45%" stop-color="#242429" />
+                  <stop offset="55%" stop-color="#242429" />
+                  <stop offset="100%" stop-color="#111113" />
+                </linearGradient>
+                <!-- Center shutter seam glint -->
+                <linearGradient id="slitGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#88b4ff" stop-opacity="0.8" />
+                  <stop offset="50%" stop-color="#ffffff" stop-opacity="1" />
+                  <stop offset="100%" stop-color="#88b4ff" stop-opacity="0.8" />
+                </linearGradient>
+
+                <!-- Left eye inner lens boundary clip -->
+                <clipPath id="leftEyeClip">
+                  <path d="M 189.0,741.5 L 179.5,735.0 L 178.5,720.0 L 180.5,706.0 L 184.5,694.0 L 189.5,683.0 L 196.5,674.0 L 206.0,667.5 L 217.0,662.5 L 232.0,661.5 L 244.0,665.5 L 253.5,672.0 L 260.5,681.0 L 255.5,692.0 L 249.5,702.0 L 243.0,711.5 L 235.5,720.0 L 226.5,727.0 L 217.0,733.5 L 206.0,738.5 L 192.0,740.5 Z" />
+                </clipPath>
+
+                <!-- Right eye inner lens boundary clip -->
+                <clipPath id="rightEyeClip">
+                  <path d="M 383.0,740.5 L 370.5,738.0 L 360.0,733.5 L 351.5,727.0 L 344.0,719.5 L 337.0,711.5 L 331.0,702.5 L 326.0,692.5 L 322.5,681.0 L 328.5,672.0 L 337.5,666.0 L 349.0,662.5 L 363.5,663.0 L 375.0,666.5 L 383.0,673.5 L 390.0,681.5 L 395.5,691.0 L 398.5,703.0 L 401.5,715.0 L 402.0,728.5 L 398.0,739.5 L 384.0,738.5 L 379.5,739.0 Z" />
+                </clipPath>
+              </defs>
+
+              <!-- Left Eye Lens Shutters (Blinking mechanism) -->
+              <g clip-path="url(#leftEyeClip)">
+                <rect class="spidey-shutter spidey-shutter--top-left" x="160" y="625" width="125" height="75" fill="url(#shutterGrad)" />
+                <rect class="spidey-shutter spidey-shutter--bottom-left" x="160" y="695" width="125" height="75" fill="url(#shutterGrad)" />
+                <line class="spidey-slit spidey-slit--left" x1="178" y1="697" x2="260" y2="697" stroke="url(#slitGlow)" stroke-width="2" />
+              </g>
+
+              <!-- Right Eye Lens Shutters (Blinking mechanism) -->
+              <g clip-path="url(#rightEyeClip)">
+                <rect class="spidey-shutter spidey-shutter--top-right" x="310" y="625" width="125" height="75" fill="url(#shutterGrad)" />
+                <rect class="spidey-shutter spidey-shutter--bottom-right" x="310" y="695" width="125" height="75" fill="url(#shutterGrad)" />
+                <line class="spidey-slit spidey-slit--right" x1="322" y1="697" x2="405" y2="697" stroke="url(#slitGlow)" stroke-width="2" />
+              </g>
+            </svg>
+          </div>
+
+          <!-- Interactive Speech Bubble -->
+          <div class="spidey-speech-bubble" id="spidey-speech-bubble">
+            Happy Birthday Diva! 🕷️🎉
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grand Cake Cut Celebration Screen (Full Site 3D Blender Spider-Man Layer) -->
+  <div id="cake-cut-celebration-screen" class="celebration-screen hidden">
+    <!-- Ambient glowing sparkles backdrop -->
+    <div class="celebration-screen__backdrop"></div>
+
+    <!-- Celebration Screen Content Wrapper -->
+    <div class="celebration-screen__container">
+      
+      <!-- 3D Peeking Spider-Man Character (Left) -->
+      <div class="celebration-spidey" id="celebration-spidey" title="Click me! 🕷️">
+        <!-- Ambient atmospheric rim halo -->
+        <div class="celebration-spidey__glow"></div>
+
+        <!-- 3D Peeking Character Wrapper -->
+        <div class="celebration-spidey__character">
+          <img 
+            src="/spiderman-peeking.png" 
+            alt="Spider-Man Peeking" 
+            class="celebration-spidey__img" 
+            id="celebration-spidey-img"
+            draggable="false"
+          />
+
+          <!-- SVG Mechanical Eye Shutter Overlay for Peeking Spider-Man -->
+          <svg class="celebration-spidey__eyes" viewBox="0 0 576 1024" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="peekShutterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#111113" />
+                <stop offset="45%" stop-color="#242429" />
+                <stop offset="55%" stop-color="#242429" />
+                <stop offset="100%" stop-color="#111113" />
+              </linearGradient>
+              <linearGradient id="peekSlitGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#88b4ff" stop-opacity="0.8" />
+                <stop offset="50%" stop-color="#ffffff" stop-opacity="1" />
+                <stop offset="100%" stop-color="#88b4ff" stop-opacity="0.8" />
+              </linearGradient>
+
+              <!-- Left eye lens clip path -->
+              <clipPath id="peekEyeClipLeft">
+                <path d="M 198,280 L 210,268 L 225,266 L 242,272 L 258,282 L 272,296 L 285,312 L 296,330 L 304,350 L 308,375 L 309,400 L 304,418 L 294,429 L 275,432 L 252,431 L 230,424 L 208,410 L 192,388 L 182,360 L 180,330 L 185,304 Z" />
+              </clipPath>
+
+              <!-- Right eye lens clip path -->
+              <clipPath id="peekEyeClipRight">
+                <path d="M 400,540 L 382,536 L 370,526 L 360,510 L 356,492 L 356,478 L 375,468 L 395,460 L 416,455 L 436,453 L 454,454 L 468,458 L 474,466 L 474,476 L 468,486 L 458,500 L 446,513 L 432,524 L 416,534 Z" />
+              </clipPath>
+            </defs>
+
+            <!-- Left Eye Aperture -->
+            <g clip-path="url(#peekEyeClipLeft)">
+              <rect class="peek-shutter peek-shutter--top-left" x="170" y="240" width="150" height="115" fill="url(#peekShutterGrad)" />
+              <rect class="peek-shutter peek-shutter--bottom-left" x="170" y="352" width="150" height="115" fill="url(#peekShutterGrad)" />
+              <line class="peek-slit peek-slit--left" x1="182" y1="352" x2="308" y2="352" stroke="url(#peekSlitGlow)" stroke-width="2.5" />
+            </g>
+
+            <!-- Right Eye Aperture -->
+            <g clip-path="url(#peekEyeClipRight)">
+              <rect class="peek-shutter peek-shutter--top-right" x="350" y="440" width="135" height="58" fill="url(#peekShutterGrad)" />
+              <rect class="peek-shutter peek-shutter--bottom-right" x="350" y="496" width="135" height="58" fill="url(#peekShutterGrad)" />
+              <line class="peek-slit peek-slit--right" x1="358" y1="496" x2="472" y2="496" stroke="url(#peekSlitGlow)" stroke-width="2.5" />
+            </g>
+          </svg>
+        </div>
+
+        <!-- Speech Bubble from Peeking Spider-Man -->
+        <div class="celebration-spidey__speech" id="celebration-spidey-speech">
+          Spider-Sense says this cake is 10/10! 😋🍰
+        </div>
+      </div>
+
+      <!-- Celebration Card & Birthday Honors (Right) -->
+      <div class="celebration-card">
+        <div class="celebration-card__badge">🎂 CAKE IS CUT! 🎉</div>
+        <h2 class="celebration-card__title">
+          HAPPY BIRTHDAY<br>
+          <span class="celebration-card__name" id="celebration-name">DIVAA</span>
+        </h2>
+        <p class="celebration-card__quote">
+          “With great birthdays comes great cake!” 🕷️✨
+        </p>
+        <p class="celebration-card__subtitle">
+          Your friendly neighborhood Spider-Man wishes you a heroic, joyful, and sweet celebration!
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="celebration-card__actions">
+          <button class="celebration-btn celebration-btn--primary" id="btn-celebrate-confetti">
+            <span class="celebration-btn__icon">🎊</span> Shower Confetti!
+          </button>
+          <button class="celebration-btn celebration-btn--secondary" id="btn-celebrate-cut-again">
+            <span class="celebration-btn__icon">✂️</span> Cut Cake Again
+          </button>
+          <button class="celebration-btn celebration-btn--outline" id="btn-celebrate-back">
+            <span class="celebration-btn__icon">🍰</span> Back to Cake
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

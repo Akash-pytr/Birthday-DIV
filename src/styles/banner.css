@@ -1,0 +1,53 @@
+/* ============================================
+   Birthday Banner
+   ============================================ */
+
+.birthday-banner {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-banner);
+  pointer-events: none;
+  animation: slideInUp var(--duration-slow) var(--ease-out-back);
+  transition: left 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.has-sidebar .birthday-banner {
+  left: calc(var(--sidebar-width) + (100vw - var(--sidebar-width)) / 2);
+}
+
+.birthday-banner__text {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+  color: #D62828;
+  -webkit-text-stroke: 2.5px #156675;
+  text-shadow:
+    -2px -2px 0 #156675,
+    2px -2px 0 #156675,
+    -2px 2px 0 #156675,
+    2px 2px 0 #156675,
+    0 4px 0 #0C434D,
+    0 8px 16px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  animation: float 4s ease-in-out infinite;
+  text-align: center;
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .birthday-banner,
+  body.has-sidebar .birthday-banner {
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+  }
+  .birthday-banner__text {
+    font-size: clamp(1.8rem, 7vw, 2.8rem);
+    white-space: normal;
+  }
+}
+

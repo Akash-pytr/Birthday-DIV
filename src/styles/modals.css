@@ -1,0 +1,32 @@
+/* ============================================
+   Modal Specific Styles
+   ============================================ */
+
+/* Invitation Modal */
+.invitation-modal {
+  max-width: 450px;
+}
+
+.invitation-modal .modal__title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.invitation-modal .modal__text {
+  margin-bottom: 24px;
+  font-size: 1rem;
+}
+
+.invitation-modal .btn {
+  margin-top: 8px;
+}
+
+/* Thank You Modal */
+.thankyou-modal {
+  max-width: 460px;
+}
+
+.thankyou-modal .modal__title {
+  font-size: 2.8rem;
+  margin-bottom: 16px;
+}

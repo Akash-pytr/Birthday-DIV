@@ -1,0 +1,174 @@
+/* ============================================
+   Cake Cutting Overlay & UI
+   ============================================ */
+
+/* Overlay container */
+.cake-cut-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-sidebar);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 80px;
+  pointer-events: none;
+  transition: opacity var(--duration-normal) var(--ease-out-expo);
+}
+
+.cake-cut-overlay.hidden {
+  display: none;
+}
+
+/* Instruction text floating above */
+.cake-cut__instruction {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--text-white);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4), 0 0 40px rgba(91, 33, 182, 0.3);
+  text-align: center;
+  margin-bottom: 24px;
+  animation: float 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Cut the cake button */
+.cake-cut__btn {
+  pointer-events: all;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px 48px;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: var(--text-white);
+  background: linear-gradient(135deg, #EC4899 0%, #8B5CF6 50%, #3B82F6 100%);
+  box-shadow:
+    0 6px 25px rgba(236, 72, 153, 0.35),
+    0 0 50px rgba(139, 92, 246, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: visible;
+  text-transform: uppercase;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+  animation: cakeCutBtnPulse 2s ease-in-out infinite;
+}
+
+.cake-cut__btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow:
+    0 10px 35px rgba(236, 72, 153, 0.45),
+    0 0 70px rgba(139, 92, 246, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.cake-cut__btn:active {
+  transform: scale(0.96);
+}
+
+.cake-cut__btn--cutting {
+  pointer-events: none;
+  animation: none;
+  opacity: 0.7;
+}
+
+/* Knife emoji in button */
+.cake-cut__btn-knife {
+  font-size: 1.4rem;
+  display: inline-block;
+  animation: knifeWobble 1.5s ease-in-out infinite;
+}
+
+/* Progress dots */
+.cake-cut__progress {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  pointer-events: none;
+}
+
+.cake-cut__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  transition: all var(--duration-normal) var(--ease-out-expo);
+}
+
+.cake-cut__dot--done {
+  background: #10B981;
+  border-color: #10B981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+/* Celebration text after cake is cut */
+.cake-cut__celebration {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--text-white);
+  text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  pointer-events: none;
+  animation: celebrationBounce 0.8s var(--ease-out-back);
+}
+
+/* Keyframes */
+@keyframes cakeCutBtnPulse {
+  0%, 100% {
+    box-shadow:
+      0 6px 25px rgba(236, 72, 153, 0.35),
+      0 0 50px rgba(139, 92, 246, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 8px 35px rgba(236, 72, 153, 0.5),
+      0 0 80px rgba(139, 92, 246, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes knifeWobble {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}
+
+@keyframes celebrationBounce {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(30px);
+  }
+  60% {
+    transform: scale(1.15) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cake-cut-overlay {
+    padding-bottom: 40px;
+  }
+
+  .cake-cut__instruction {
+    font-size: 1.1rem;
+  }
+
+  .cake-cut__btn {
+    padding: 14px 36px;
+    font-size: 0.95rem;
+  }
+
+  .cake-cut__celebration {
+    font-size: 1.8rem;
+  }
+}

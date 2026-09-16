@@ -1,0 +1,248 @@
+/* ============================================
+   Reusable Component Styles
+   ============================================ */
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+/* Primary Button */
+.btn--primary {
+  background: var(--primary);
+  color: var(--text-white);
+  box-shadow: 0 4px 15px rgba(91, 33, 182, 0.35);
+}
+
+.btn--primary:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 6px 20px rgba(91, 33, 182, 0.45);
+  transform: translateY(-1px);
+}
+
+/* Secondary Button */
+.btn--secondary {
+  background: var(--card-bg-solid);
+  color: var(--primary);
+  border: 2px solid var(--primary-lighter);
+}
+
+.btn--secondary:hover {
+  background: var(--primary-lightest);
+  border-color: var(--primary);
+}
+
+/* Link Button */
+.btn--link {
+  background: none;
+  color: var(--primary);
+  padding: 8px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.btn--link:hover {
+  color: var(--primary-hover);
+}
+
+/* Small Button */
+.btn--sm {
+  padding: 8px 16px;
+  font-size: 0.75rem;
+}
+
+/* Full Width */
+.btn--full {
+  width: 100%;
+}
+
+/* Sparkle Effect on buttons */
+.btn--sparkle {
+  overflow: visible;
+}
+
+.btn__text {
+  position: relative;
+  z-index: 2;
+}
+
+.btn__sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.btn__sparkles--small {
+  position: relative;
+  display: inline-flex;
+  width: 0;
+  overflow: visible;
+}
+
+.btn__sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-gold);
+  border-radius: 50%;
+  animation: sparkle 2s infinite;
+  opacity: 0;
+}
+
+.btn__sparkle:nth-child(1) { top: -5px; left: 10%; animation-delay: 0s; }
+.btn__sparkle:nth-child(2) { top: -8px; right: 20%; animation-delay: 0.4s; }
+.btn__sparkle:nth-child(3) { bottom: -5px; left: 30%; animation-delay: 0.8s; }
+.btn__sparkle:nth-child(4) { bottom: -8px; right: 10%; animation-delay: 1.2s; }
+.btn__sparkle:nth-child(5) { top: 50%; left: -5px; animation-delay: 1.6s; }
+
+.btn--primary:hover .btn__sparkle {
+  background: var(--accent-gold);
+}
+
+/* Disabled state */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ---- Modal Overlay ---- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal-overlay);
+  animation: fadeIn var(--duration-normal) var(--ease-out-expo);
+}
+
+.modal {
+  background: var(--modal-bg);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  max-width: 480px;
+  width: 90%;
+  position: relative;
+  text-align: center;
+  box-shadow: var(--shadow-xl);
+  animation: scaleUp var(--duration-slow) var(--ease-out-back);
+}
+
+.modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--duration-fast);
+}
+
+.modal__close:hover {
+  background: rgba(91, 33, 182, 0.1);
+}
+
+.modal__title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+.modal__text {
+  font-size: 0.95rem;
+  color: var(--text-body);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.modal__label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.modal__divider {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 16px 0;
+  font-weight: 600;
+}
+
+.modal__qr {
+  margin: 16px auto;
+  padding: 12px;
+  background: var(--card-bg-solid);
+  border-radius: var(--radius-md);
+  display: inline-block;
+  box-shadow: var(--shadow-sm);
+}
+
+.modal__qr canvas {
+  display: block;
+}
+
+/* ---- Input Fields ---- */
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid rgba(91, 33, 182, 0.15);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  background: rgba(255, 255, 255, 0.6);
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+textarea.input {
+  resize: vertical;
+  min-height: 100px;
+}

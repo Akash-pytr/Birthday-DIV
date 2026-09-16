@@ -1,0 +1,398 @@
+/* ============================================
+   Candle Wizard Sidebar & Steps
+   ============================================ */
+
+.wizard-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  z-index: var(--z-sidebar);
+  background: var(--sidebar-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  animation: slideInLeft var(--duration-slow) var(--ease-out-expo);
+  border-right: 1px solid var(--glass-border);
+}
+
+.wizard-step {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Title */
+.wizard__title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+
+/* Progress Indicator: ①──②──③ */
+.wizard__progress {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 16px;
+}
+
+.wizard__step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+  transition: all var(--duration-normal);
+}
+
+.wizard__step-num--active {
+  background: var(--primary);
+  color: var(--text-white);
+  box-shadow: 0 2px 8px rgba(91, 33, 182, 0.4);
+}
+
+.wizard__step-num--done {
+  background: var(--accent-teal);
+  color: var(--text-white);
+}
+
+.wizard__progress-line {
+  flex: 1;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--accent-teal) 0px,
+    var(--accent-teal) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  opacity: 0.4;
+  margin: 0 4px;
+}
+
+.wizard__progress-line--done {
+  opacity: 1;
+}
+
+/* Prompt text */
+.wizard__prompt {
+  font-size: 0.9rem;
+  color: var(--text-body);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Candle Selection Grid */
+.wizard__candle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: auto;
+}
+
+.wizard__candle-option {
+  aspect-ratio: 1;
+  background: rgba(200, 180, 220, 0.2);
+  border-radius: var(--radius-md);
+  border: 3px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+  position: relative;
+}
+
+.wizard__candle-option:hover {
+  background: rgba(200, 180, 220, 0.35);
+  transform: scale(1.05);
+}
+
+.wizard__candle-option--selected {
+  border-color: var(--primary);
+  background: rgba(200, 180, 220, 0.4);
+  box-shadow: 0 0 0 2px rgba(91, 33, 182, 0.2);
+}
+
+/* Placement hint */
+.wizard__placement-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 30px 0;
+  font-size: 0.9rem;
+  color: var(--text-body);
+}
+
+.wizard__arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--text-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all var(--duration-fast);
+}
+
+.wizard__arrow:hover {
+  background: var(--primary-hover);
+  transform: scale(1.1);
+}
+
+/* Buttons */
+.wizard__buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.wizard__buttons .btn {
+  flex: 1;
+}
+
+/* ============================================
+   Message Card (Step 3)
+   ============================================ */
+
+.message-card {
+  position: fixed;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  max-width: 90vw;
+  z-index: var(--z-sidebar);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  animation: scaleUp var(--duration-slow) var(--ease-out-back);
+  /* Candy stripe border effect */
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--accent-teal),
+    var(--accent-teal) 8px,
+    rgba(255, 255, 255, 0.6) 8px,
+    rgba(255, 255, 255, 0.6) 16px
+  );
+  padding: 6px;
+  box-shadow: var(--shadow-xl);
+}
+
+.message-card__tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  overflow: hidden;
+}
+
+.message-card__tab {
+  flex: 1;
+  padding: 14px 16px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  position: relative;
+}
+
+.message-card__tab--active {
+  color: var(--text-dark);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.message-card__tab--ai {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--primary);
+  background: var(--primary);
+  color: var(--text-white);
+  border-radius: 0 var(--radius-lg) 0 0;
+}
+
+.message-card__tab--ai.message-card__tab--active {
+  background: var(--primary);
+  color: var(--text-white);
+}
+
+.message-card__body {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 24px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.message-card__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message-card__label {
+  font-size: 0.85rem;
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.message-card__textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  background: rgba(240, 235, 245, 0.5);
+  resize: vertical;
+  transition: border-color var(--duration-fast);
+}
+
+.message-card__textarea:focus {
+  outline: none;
+  border-color: var(--primary-lighter);
+}
+
+.message-card__textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.message-card__input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  background: rgba(240, 235, 245, 0.5);
+  transition: border-color var(--duration-fast);
+}
+
+.message-card__input:focus {
+  outline: none;
+  border-color: var(--primary-lighter);
+}
+
+.message-card__counter {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* Chips */
+.message-card__chips-input {
+  display: flex;
+  gap: 8px;
+}
+
+.message-card__chip-field {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  background: rgba(240, 235, 245, 0.5);
+}
+
+.message-card__chip-field:focus {
+  outline: none;
+  border-color: var(--primary-lighter);
+}
+
+.message-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 10px;
+}
+
+.message-card__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  background: var(--primary-lightest);
+  color: var(--primary);
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 600;
+  animation: chipBounce 0.3s var(--ease-out-back);
+}
+
+.message-card__chip-remove {
+  cursor: pointer;
+  font-size: 0.7rem;
+  opacity: 0.6;
+  transition: opacity var(--duration-fast);
+}
+
+.message-card__chip-remove:hover {
+  opacity: 1;
+}
+
+/* Message card buttons */
+.message-card__buttons {
+  display: flex;
+  gap: 12px;
+  padding: 16px 6px 6px;
+  justify-content: center;
+}
+
+.message-card__buttons .btn {
+  min-width: 120px;
+}
+
+/* ============================================
+   Responsive Wizard
+   ============================================ */
+
+@media (max-width: 768px) {
+  .wizard-sidebar {
+    width: 100%;
+    height: auto;
+    max-height: 45vh;
+    top: auto;
+    bottom: 0;
+    border-right: none;
+    border-top: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    animation: slideInUp var(--duration-slow) var(--ease-out-expo);
+    padding: 20px 16px;
+  }
+
+  .wizard__candle-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .message-card {
+    left: 50%;
+    width: 95vw;
+    top: auto;
+    bottom: 10px;
+    transform: translateX(-50%);
+  }
+}

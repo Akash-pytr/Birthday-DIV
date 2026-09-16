@@ -1,0 +1,89 @@
+/* ============================================
+   Header Bar & Settings Menu
+   ============================================ */
+
+.header-bar {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: var(--z-header);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-bar__btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.header-bar__btn:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.header-bar__btn--active {
+  background: var(--primary);
+  color: var(--text-white);
+}
+
+.header-bar__btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Settings Dropdown */
+.settings-dropdown {
+  position: absolute;
+  top: 54px;
+  right: 0;
+  min-width: 220px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  padding: 8px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--glass-border);
+  animation: slideDown var(--duration-normal) var(--ease-out-expo);
+}
+
+.settings-dropdown__item {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  text-align: left;
+  border-radius: var(--radius-sm);
+  transition: background var(--duration-fast);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.settings-dropdown__item:hover {
+  background: rgba(91, 33, 182, 0.06);
+}
+
+.settings-dropdown__divider {
+  border: none;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+  margin: 4px 8px;
+}

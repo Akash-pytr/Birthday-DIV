@@ -1,0 +1,95 @@
+/* ============================================
+   Loading Screen
+   ============================================ */
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loading);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 10% 20%, var(--bg-gradient-1) 0%, transparent 50%),
+              radial-gradient(ellipse at 90% 10%, var(--bg-gradient-3) 0%, transparent 40%),
+              radial-gradient(ellipse at 50% 50%, var(--bg-gradient-2) 0%, transparent 60%),
+              radial-gradient(ellipse at 90% 90%, var(--bg-gradient-4) 0%, transparent 40%),
+              radial-gradient(ellipse at 10% 90%, var(--bg-gradient-5) 0%, transparent 40%);
+  background-color: #F0E4F4;
+  transition: opacity 0.8s ease;
+}
+
+.loading-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-screen__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.loading-screen__cake-icon {
+  width: 120px;
+  height: 120px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.loading-screen__cake-icon line,
+.loading-screen__cake-icon ellipse {
+  stroke: var(--text-dark);
+}
+
+.loading-screen__cake-icon ellipse[fill] {
+  fill: var(--text-dark);
+}
+
+/* Candy stripe progress bar */
+.loading-screen__progress {
+  width: 180px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 7px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.loading-screen__progress-bar {
+  width: 100%;
+  height: 100%;
+  border-radius: 7px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--stripe-color-1),
+    var(--stripe-color-1) 8px,
+    var(--stripe-color-2) 8px,
+    var(--stripe-color-2) 16px
+  );
+  background-size: 40px 100%;
+  animation: stripeMove 0.8s linear infinite;
+}
+
+/* Marquee text */
+.loading-screen__marquee {
+  position: absolute;
+  bottom: 60px;
+  width: 100%;
+  overflow: hidden;
+  opacity: 0.5;
+}
+
+.loading-screen__marquee-track {
+  display: flex;
+  gap: 60px;
+  white-space: nowrap;
+  animation: marquee 20s linear infinite;
+}
+
+.loading-screen__marquee-track span {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  flex-shrink: 0;
+}

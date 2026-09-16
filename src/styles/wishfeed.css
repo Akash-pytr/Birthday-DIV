@@ -1,0 +1,162 @@
+/* ============================================
+   Wish Feed Sidebar
+   ============================================ */
+
+.wish-feed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  z-index: var(--z-sidebar);
+  background: var(--sidebar-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  animation: slideInLeft var(--duration-slow) var(--ease-out-expo);
+  border-right: 1px solid var(--glass-border);
+}
+
+.wish-feed__header {
+  margin-bottom: 20px;
+}
+
+.wish-feed__title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+
+.wish-feed__subtitle {
+  font-size: 0.9rem;
+  color: var(--text-body);
+  line-height: 1.6;
+}
+
+/* Wish List */
+.wish-feed__list {
+  flex: 1;
+  overflow-y: auto;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Individual Wish Card */
+.wish-card {
+  display: flex;
+  gap: 12px;
+  padding: 4px 0;
+  animation: slideInUp 0.4s var(--ease-out-expo);
+}
+
+.wish-card__candle {
+  font-size: 2rem;
+  flex-shrink: 0;
+  width: 40px;
+  text-align: center;
+}
+
+.wish-card__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.wish-card__name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  margin-bottom: 2px;
+}
+
+.wish-card__message {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-body);
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.wish-card__heart {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: transform var(--duration-fast);
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+.wish-card__heart:hover {
+  transform: scale(1.15);
+}
+
+.wish-card__heart-icon {
+  font-size: 1.2rem;
+  color: var(--heart-empty);
+  transition: color var(--duration-fast);
+}
+
+.wish-card__heart-icon--filled {
+  color: var(--heart-filled);
+  animation: heartbeat 0.6s ease;
+}
+
+.wish-card__heart-count {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* Feed Footer */
+.wish-feed__footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 16px;
+}
+
+.wish-feed__create-new {
+  display: block;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: color var(--duration-fast);
+}
+
+.wish-feed__create-new:hover {
+  color: var(--primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .wish-feed {
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    top: auto;
+    bottom: 0;
+    border-right: none;
+    border-top: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    animation: slideInUp var(--duration-slow) var(--ease-out-expo);
+    padding: 20px 16px;
+  }
+
+  .wish-feed__list {
+    max-height: 200px;
+  }
+}
